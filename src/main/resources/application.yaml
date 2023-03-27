@@ -1,1 +1,28 @@
+service:
+  name: tracking-detector
 
+application:
+  path: ${base.url}${server.servlet.context-path}
+
+base:
+  url: http://localhost:${server.port}
+
+server:
+  servlet:
+    context-path: /${service.name}
+  port: 3000
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOST}
+      port: ${MONGO_DB_PORT}
+      database: ${MONGO_DB_DATABASE}
+  application:
+    name: ${service.name}
+
+minio:
+  url: ${MINIO_URL}
+  port: 8080
+  accessKey: ${MINIO_ACCESS_KEY}
+  privateKey: ${MINIO_PRIVATE_KEY}
