@@ -26,3 +26,8 @@ minio:
   port: 8080
   accessKey: ${MINIO_ACCESS_KEY}
   privateKey: ${MINIO_PRIVATE_KEY}
+
+buckets:
+  trainingDataBucket: ${TRAINING_DATA_BUCKET}
+  modelBucket: ${MODEL_BUCKET}
+  mongoDbBackupBucket: ${MONGO_DB_BACKUP_BUCKET}

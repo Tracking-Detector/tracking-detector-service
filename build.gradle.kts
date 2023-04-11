@@ -1,6 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("plugin.lombok") version "1.8.20"
+    id("io.freefair.lombok") version "5.3.0"
     id("org.springframework.boot") version "2.7.10"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.6.21"
@@ -17,11 +19,16 @@ repositories {
 extra["testcontainersVersion"] = "1.17.6"
 
 dependencies {
+    implementation("org.asynchttpclient:async-http-client:2.12.3")
+    implementation("io.github.oshai:kotlin-logging-jvm:4.0.0-beta-22")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework:spring-webmvc:6.0.7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation ("org.jetbrains.kotlinx:kotlin-deeplearning-tensorflow:0.5.1")
+    implementation("org.tensorflow:tensorflow:1.1.0-rc2")
     implementation(kotlin("reflect"))
     implementation("io.minio:minio:8.5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -44,6 +51,9 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }

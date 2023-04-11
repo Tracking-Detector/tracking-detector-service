@@ -1,10 +1,13 @@
 package com.trackingdetector.trackingdetectorservice.domain
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
 
-
+@Document
 data class RequestData(
+    @Id
     val id: UUID = UUID.randomUUID(),
     val documentId: String,
     val documentLifecycle: String,

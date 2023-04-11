@@ -1,0 +1,22 @@
+service:
+  name: tracking-detector
+
+application:
+  path: ${base.url}${server.servlet.context-path}
+
+base:
+  url: http://127.0.0.1:${server.port}
+
+server:
+  servlet:
+    context-path: /${service.name}
+  port: 8086
+
+spring:
+  application:
+    name: ${service.name}
+
+buckets:
+  trainingDataBucket: "training"
+  modelBucket: "models"
+  mongoDbBackupBucket: "backup"

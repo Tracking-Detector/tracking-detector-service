@@ -1,5 +1,7 @@
 package com.trackingdetector.trackingdetectorservice.extractor
 
+import java.util.*
+
 object FeatureExtractorUtils {
     private val TYPES: List<String> = listOf(
         "xmlhttprequest",
@@ -56,7 +58,7 @@ object FeatureExtractorUtils {
     val REQUEST_HEADER_REFERER: (List<Map<String, String>>) -> List<Int> =  {
         var isReferred = 0;
         for (header in it) {
-            if (header["Referer"] != null) {
+            if (header["name"] != null && Objects.equals(header["name"], "Referer")) {
                 isReferred = 1
                 break
             }

@@ -2,23 +2,30 @@ package com.trackingdetector.trackingdetectorservice.testSupport
 
 import com.trackingdetector.trackingdetectorservice.TestApplication
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.springframework.test.context.event.annotation.AfterTestClass
+import org.springframework.test.context.event.annotation.BeforeTestClass
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.Duration
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(classes = [TestApplication::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringJUnitConfig
+@ExtendWith(SpringExtension::class)
+@SpringBootTest(classes = [TestApplication::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8086"])
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @Testcontainers
 @TestConfiguration
-@ContextConfiguration
+@ContextConfiguration(classes=[TestApplication::class])
 abstract class AbstractSpringTest {
 
     companion object {
@@ -36,7 +43,7 @@ abstract class AbstractSpringTest {
                 .forPath("/minio/health/ready")
                 .forPort(9000)
                 .withStartupTimeout(Duration.ofSeconds(10)))
-        @BeforeAll
+        @BeforeTestClass
         @JvmStatic
         fun startContainers() {
             mongoDbContainer.start()
@@ -56,7 +63,7 @@ abstract class AbstractSpringTest {
             registry.add("minio.privateKey") { minioRootPassword }
         }
 
-        @AfterAll
+        @AfterTestClass
         @JvmStatic
         fun stopContainers() {
             mongoDbContainer.stop()
