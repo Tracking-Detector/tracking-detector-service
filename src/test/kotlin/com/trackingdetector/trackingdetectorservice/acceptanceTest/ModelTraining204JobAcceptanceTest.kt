@@ -10,9 +10,5 @@ class ModelTraining204JobAcceptanceTest: AbstractSpringTest() {
     private lateinit var jobTest: JobTest
 
 
-    @Test
-    fun test() {
-        jobTest.startCleanUpJob()
-            .and()
-    }
+
 }

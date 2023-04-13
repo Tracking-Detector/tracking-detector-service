@@ -21,6 +21,10 @@ spring:
   application:
     name: ${service.name}
 
+rpc:
+  host: ${RPC_HOST}
+  port: ${RPC_PORT}
+
 minio:
   url: ${MINIO_URL}
   port: 8080
