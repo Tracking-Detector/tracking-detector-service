@@ -33,4 +33,12 @@ class KerasModelService(private val kerasModelRepository: KerasModelRepository) 
         this.kerasModelRepository.save(kerasModel)
     }
 
+    fun getKerasModelById(modelId: String) : KerasModel {
+        val model  = this.kerasModelRepository.findById(modelId)
+        if (model.isEmpty) {
+            throw Exception("Keras model for given id: $modelId could not be found")
+        }
+        return model.get()
+    }
+
 }
