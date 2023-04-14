@@ -12,4 +12,10 @@ data class TrainingResult(
     val modelId: String,
     val accuracy: Double,
     val trainingRun: Instant,
-)
+) {
+    companion object {
+        fun fromHashMap(modelId: String, items: HashMap<*,*>) : TrainingResult {
+            return TrainingResult(modelId = modelId, accuracy = items["accuracy"] as Double, trainingRun = Instant.ofEpochMilli(items["trainingRun"] as Long))
+        }
+    }
+}

@@ -9,10 +9,8 @@ import java.time.Instant
 class TrainingResultService(private val trainingResultRepository: TrainingResultRepository) {
 
 
-    fun createTrainingResult(modelId: String, accuracy: Double, trainingRun: Instant) {
-        this.trainingResultRepository.save(TrainingResult(modelId = modelId,
-            accuracy = accuracy,
-            trainingRun = trainingRun))
+    fun createTrainingResult(trainingResult: TrainingResult) {
+        this.trainingResultRepository.save(trainingResult)
     }
 
     fun getAllTrainingResultsForModel(modelId: String): List<TrainingResult> {

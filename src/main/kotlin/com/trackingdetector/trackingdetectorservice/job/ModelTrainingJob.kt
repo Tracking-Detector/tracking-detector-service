@@ -1,28 +1,32 @@
 package com.trackingdetector.trackingdetectorservice.job
 
+import com.trackingdetector.trackingdetectorservice.domain.TrainingResult
 import com.trackingdetector.trackingdetectorservice.service.KerasModelService
+import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import org.apache.xmlrpc.client.XmlRpcClient
 
 
 class ModelTrainingJob(jobDefinition: JobDefinition,
                        private val xmlRpcClient: XmlRpcClient,
-                       private val kerasModelService: KerasModelService) : JobRunnable(jobDefinition) {
+                       private val kerasModelService: KerasModelService,
+                       private val trainingResultService: TrainingResultService) : JobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
         val allModels = kerasModelService.getAllKerasModels()
 
         for (model in allModels) {
-           jobPublisher.info("Started training of ${model.modelStorageName}")
-           val result = xmlRpcClient.execute("training", listOf(model.applicationName,
+            jobPublisher.info("Started training of ${model.modelStorageName}")
+            val result = xmlRpcClient.execute("training", listOf(model.applicationName,
                model.modelStorageName,
                model.trainingDataFilename,
                model.modelJson,
                model.batchSize,
                model.epochs)) as HashMap<*,*>
 
-           jobPublisher.info(result["log"] as String)
-
-
-           jobPublisher.info("Finished training of ${model.modelStorageName}")
+            jobPublisher.info(result["log"] as String)
+            val trainingResult = TrainingResult.fromHashMap(model.id, result)
+            jobPublisher.info("Finished training ${model.modelName} with an accuracy of: ${trainingResult.accuracy}.")
+            trainingResultService.createTrainingResult(trainingResult)
+            jobPublisher.info("Finished training of ${model.modelStorageName}")
         }
 
         return true
