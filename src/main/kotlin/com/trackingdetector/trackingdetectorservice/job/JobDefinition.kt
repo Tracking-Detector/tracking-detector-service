@@ -2,10 +2,10 @@ package com.trackingdetector.trackingdetectorservice.job
 
 import com.trackingdetector.trackingdetectorservice.util.HashUtils
 
-data class JobDefinition(
-    val jobName: String,
-    val jobDescription: String,
-    val cronExpression: String,
+open class JobDefinition(
+    var jobName: String,
+    var jobDescription: String,
+    var cronExpression: String,
     ) {
-    val jobId: String = HashUtils.sha256(this.jobName)
+    var jobId: String = HashUtils.sha256(this.jobName)
 }

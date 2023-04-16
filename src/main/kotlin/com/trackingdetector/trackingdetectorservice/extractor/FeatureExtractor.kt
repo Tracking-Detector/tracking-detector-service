@@ -3,7 +3,7 @@ package com.trackingdetector.trackingdetectorservice.extractor
 import com.trackingdetector.trackingdetectorservice.domain.RequestData
 
 
-class FeatureExtractor private constructor(
+open class FeatureExtractor private constructor(
     private val sequence: List<ExtractorTypes>,
     private val documentId: ((String) -> List<Int>)?,
     private val documentLifecycle: ((String) -> List<Int>)?,
@@ -299,7 +299,7 @@ class FeatureExtractor private constructor(
         }
     }
 
-    fun extract(requestData: RequestData) : String {
+    open fun extract(requestData: RequestData) : String {
         return this.sequence.map {
             extractVariable(requestData, it)
         }.reduce { acc: List<Int>, ints: List<Int> ->

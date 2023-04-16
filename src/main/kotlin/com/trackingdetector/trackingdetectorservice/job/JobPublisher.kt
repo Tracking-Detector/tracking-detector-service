@@ -7,7 +7,7 @@ import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import java.time.Instant
 import java.util.*
 
-class JobPublisher private constructor(private val jobId: String,
+open class JobPublisher private constructor(private val jobId: String,
                    private val jobMetaRepository: JobMetaRepository,
                    private val jobRunRepository: JobRunRepository) {
     companion object {
@@ -22,35 +22,35 @@ class JobPublisher private constructor(private val jobId: String,
     private var currentRunId: Optional<String> = Optional.empty()
     var isTerminated: Boolean = false
 
-    fun startJob() {
+    open fun startJob() {
         createJobRun()
         updateLastJobRun()
     }
 
-    fun skipped() {
+    open fun skipped() {
         this.isTerminated = true
         updateJobRun(Instant.now(), "SKIPPED")
     }
 
-    fun success() {
+    open fun success() {
         this.isTerminated = true
         updateJobRun(Instant.now(), "SUCCESS")
     }
 
-    fun failure() {
+    open fun failure() {
         this.isTerminated = true
         updateJobRun(Instant.now(), "FAILURE")
     }
 
-    fun info(vararg message: String) {
+    open fun info(vararg message: String) {
         generateLog("INFO", message.toList())
     }
 
-    fun warn(vararg message: String) {
+    open fun warn(vararg message: String) {
         generateLog("WARN", message.toList())
     }
 
-    fun error(vararg message: String) {
+    open fun error(vararg message: String) {
         generateLog("ERROR", message.toList())
     }
 

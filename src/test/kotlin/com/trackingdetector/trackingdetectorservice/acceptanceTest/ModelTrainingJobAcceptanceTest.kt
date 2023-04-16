@@ -26,6 +26,7 @@ class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
     @BeforeEach
     fun setUp() {
         this.mockRpcServer.startServer()
+        this.kerasModelRepository.deleteAll()
     }
 
     @AfterEach
