@@ -28,6 +28,8 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlin-deeplearning-tensorflow:0.5.1")
     implementation("io.minio:minio:8.5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.apache.xmlrpc:xmlrpc-server:3.1.3")
+    testImplementation("org.openrefine:jython:3.7.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:testcontainers:1.17.6")
     testImplementation("org.testcontainers:mongodb:1.16.2")

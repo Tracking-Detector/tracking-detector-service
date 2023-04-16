@@ -9,13 +9,20 @@ import org.apache.xmlrpc.client.XmlRpcClient
 class ModelTrainingJob(jobDefinition: JobDefinition,
                        private val xmlRpcClient: XmlRpcClient,
                        private val kerasModelService: KerasModelService,
-                       private val trainingResultService: TrainingResultService) : JobRunnable(jobDefinition) {
+                       private val trainingResultService: TrainingResultService,
+                       private val methodName: String) : JobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
         val allModels = kerasModelService.getAllKerasModels()
 
+        if (allModels.isEmpty()) {
+            jobPublisher.info("No models found.")
+            jobPublisher.skipped()
+            return false
+        }
+        jobPublisher.info("Found ${allModels.size} Models to train.")
         for (model in allModels) {
             jobPublisher.info("Started training of ${model.modelStorageName}")
-            val result = xmlRpcClient.execute("training", listOf(model.applicationName,
+            val result = xmlRpcClient.execute(methodName, listOf(model.applicationName,
                model.modelStorageName,
                model.trainingDataFilename,
                model.modelJson,

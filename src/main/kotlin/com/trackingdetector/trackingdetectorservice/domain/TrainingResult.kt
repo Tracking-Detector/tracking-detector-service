@@ -15,7 +15,7 @@ data class TrainingResult(
 ) {
     companion object {
         fun fromHashMap(modelId: String, items: HashMap<*,*>) : TrainingResult {
-            return TrainingResult(modelId = modelId, accuracy = items["accuracy"] as Double, trainingRun = Instant.ofEpochMilli(items["trainingRun"] as Long))
+            return TrainingResult(modelId = modelId, accuracy = items["accuracy"] as Double, trainingRun = Instant.ofEpochMilli((items["trainingRun"] as Int).toLong()))
         }
     }
 }

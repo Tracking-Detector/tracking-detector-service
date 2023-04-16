@@ -1,6 +1,10 @@
 package com.trackingdetector.trackingdetectorservice.testSupport
 
 import com.trackingdetector.trackingdetectorservice.TestApplication
+import org.apache.xmlrpc.server.PropertyHandlerMapping
+import org.apache.xmlrpc.server.XmlRpcServer
+import org.apache.xmlrpc.server.XmlRpcServerConfigImpl
+import org.apache.xmlrpc.webserver.WebServer
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,6 +21,7 @@ import org.testcontainers.containers.wait.strategy.HttpWaitStrategy
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.Duration
+
 
 @SpringJUnitConfig
 @ExtendWith(SpringExtension::class)

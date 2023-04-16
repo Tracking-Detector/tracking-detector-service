@@ -16,6 +16,11 @@ spring:
   application:
     name: ${service.name}
 
+rpc:
+  host: localhost
+  port: 8081
+  method: Handler.training
+
 buckets:
   trainingDataBucket: "training"
   modelBucket: "models"

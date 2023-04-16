@@ -13,7 +13,7 @@ class XmlRpcConfiguration {
     @Bean
     fun xmlRpcClient(@Value("\${rpc.host}") host: String, @Value("\${rpc.port}") port: Int) : XmlRpcClient {
         val cf = XmlRpcClientConfigImpl()
-        cf.serverURL = URL("http://${host}:${port}")
+        cf.serverURL = URL("http://$host:$port/")
         cf.connectionTimeout = 0
         val client = XmlRpcClient()
         client.setConfig(cf)

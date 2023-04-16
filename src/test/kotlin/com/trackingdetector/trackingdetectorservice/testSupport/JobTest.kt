@@ -49,8 +49,8 @@ class JobTest (
         return this
     }
 
-    fun startModelTraining204Job(): JobTest {
-        startJob("ModelTraining204Job")
+    fun startModelTrainingJob(): JobTest {
+        startJob("ModelTrainingJob")
         return this
     }
 
