@@ -65,22 +65,3 @@ tasks.test {
         events("passed", "skipped", "failed")
     }
 }
-
-tasks {
-    val ktlint by registering {
-        group = "verification"
-        description = "Runs KtLint on Kotlin sources."
-        inputs.files(fileTree("src/main/kotlin"))
-        outputs.dir(file("$buildDir/ktlint"))
-        doLast {
-            project.exec {
-                this.commandLine = listOf(
-                    "./gradlew",
-                    "ktlintCheck",
-                    "--reporter=plain",
-                    "--color=always"
-                )
-            }
-        }
-    }
-}
