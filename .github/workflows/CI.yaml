@@ -66,6 +66,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./build
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*.build/*') }}
+          restore-keys: ${{ runner.os }}-build-
       - name: Build
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
