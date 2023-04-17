@@ -1,7 +1,9 @@
 package com.trackingdetector.trackingdetectorservice.testSupport
 
 import com.trackingdetector.trackingdetectorservice.TestApplication
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestMethodOrder
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
