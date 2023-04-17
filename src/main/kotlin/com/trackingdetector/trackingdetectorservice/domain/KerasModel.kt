@@ -15,5 +15,5 @@ data class KerasModel(
     val epochs: Int,
     val trainingDataFilename: String,
     val applicationName: String,
-    val modelStorageName: String,
-    )
+    val modelStorageName: String
+)

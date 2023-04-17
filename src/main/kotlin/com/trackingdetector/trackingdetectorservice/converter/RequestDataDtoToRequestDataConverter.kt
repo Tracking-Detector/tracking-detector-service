@@ -5,7 +5,7 @@ import com.trackingdetector.trackingdetectorservice.dto.RequestDataDto
 
 object RequestDataDtoToRequestDataConverter {
 
-    fun convert(requestDataDto: RequestDataDto) : RequestData {
+    fun convert(requestDataDto: RequestDataDto): RequestData {
         return RequestData(
             documentId = requestDataDto.documentId,
             requestId = requestDataDto.requestId,

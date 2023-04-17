@@ -6,7 +6,6 @@ import org.apache.xmlrpc.webserver.WebServer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
-
 @Service
 class MockXMLRPCServer(@Value("\${rpc.port}") val port: Int) {
     private var webServer: WebServer? = null
@@ -21,8 +20,8 @@ class MockXMLRPCServer(@Value("\${rpc.port}") val port: Int) {
         webServer!!.start()
     }
 
-   fun stopServer() {
-       webServer!!.shutdown()
-       webServer = null
-   }
+    fun stopServer() {
+        webServer!!.shutdown()
+        webServer = null
+    }
 }

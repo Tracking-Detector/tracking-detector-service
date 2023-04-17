@@ -7,13 +7,17 @@ import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import java.time.Instant
 import java.util.*
 
-open class JobPublisher private constructor(private val jobId: String,
-                   private val jobMetaRepository: JobMetaRepository,
-                   private val jobRunRepository: JobRunRepository) {
+open class JobPublisher private constructor(
+    private val jobId: String,
+    private val jobMetaRepository: JobMetaRepository,
+    private val jobRunRepository: JobRunRepository
+) {
     companion object {
-        fun build(jobId: String,
-                  jobMetaRepository: JobMetaRepository,
-                  jobRunRepository: JobRunRepository): JobPublisher {
+        fun build(
+            jobId: String,
+            jobMetaRepository: JobMetaRepository,
+            jobRunRepository: JobRunRepository
+        ): JobPublisher {
             return JobPublisher(jobId, jobMetaRepository, jobRunRepository)
         }
     }
@@ -55,7 +59,7 @@ open class JobPublisher private constructor(private val jobId: String,
     }
 
     private fun generateLog(level: String, messages: List<String>) {
-        this.log += "${Instant.now()}-${level}: ${messages.joinToString(" ")}\n"
+        this.log += "${Instant.now()}-$level: ${messages.joinToString(" ")}\n"
         updateLog()
     }
 
@@ -120,9 +124,4 @@ open class JobPublisher private constructor(private val jobId: String,
         )
         this.jobMetaRepository.save(updated)
     }
-
-
-
-
-
 }

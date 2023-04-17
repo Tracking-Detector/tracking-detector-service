@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
 import java.util.zip.GZIPInputStream
 
-
 @Component
 class MinioTest(private val minioClient: MinioClient) {
 
     fun getContentOfFile(bucketName: String, objectName: String): String {
         return minioClient.getObject(
             GetObjectArgs.builder()
-            .bucket(bucketName)
-            .`object`(objectName)
-            .build()).readAllBytes().gzipDecompress()
+                .bucket(bucketName)
+                .`object`(objectName)
+                .build()
+        ).readAllBytes().gzipDecompress()
     }
 
     private fun ByteArray.gzipDecompress(): String {

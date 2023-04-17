@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 class ApplicationConfiguration {
 
     @Bean
-    fun trackingDetectorApplication() : Application {
+    fun trackingDetectorApplication(): Application {
         return Application("tracking-detector")
     }
 }

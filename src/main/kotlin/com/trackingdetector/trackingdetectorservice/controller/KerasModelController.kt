@@ -6,6 +6,7 @@ import com.trackingdetector.trackingdetectorservice.representation.KerasModelRep
 import com.trackingdetector.trackingdetectorservice.service.KerasModelService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -20,17 +21,16 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("/models")
 class KerasModelController(private val kerasModelService: KerasModelService, private val trainingResultService: TrainingResultService) {
 
-
     @GetMapping("")
-    fun getAllModels() : List<KerasModelRepresentation> {
-       return kerasModelService.getAllKerasModels().map {
-           val runs = trainingResultService.getAllTrainingResultsForModel(it.id)
-           convert(it, runs)
-       }.toList()
+    fun getAllModels(): List<KerasModelRepresentation> {
+        return kerasModelService.getAllKerasModels().map {
+            val runs = trainingResultService.getAllTrainingResultsForModel(it.id)
+            convert(it, runs)
+        }.toList()
     }
 
     @GetMapping("{id}")
-    fun getModelById(@PathVariable id: String) : KerasModelRepresentation {
+    fun getModelById(@PathVariable id: String): KerasModelRepresentation {
         try {
             val kerasModel = kerasModelService.getKerasModelById(id)
             val trainingRuns = trainingResultService.getAllTrainingResultsForModel(kerasModel.id)
@@ -40,7 +40,7 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
         }
     }
 
-    @PostMapping("")
+    @PostMapping("", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun createModel(@RequestBody kerasModelDto: KerasModelDto): ResponseEntity<String> {
         try {
             kerasModelService.createKerasModel(kerasModelDto)
@@ -50,8 +50,7 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
         }
     }
 
-
-    @PutMapping("{id}")
+    @PutMapping("{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun updateModel(@RequestBody kerasModelDto: KerasModelDto, @PathVariable id: String): ResponseEntity<String> {
         try {
             kerasModelService.createKerasModel(kerasModelDto)
@@ -60,6 +59,4 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, e.message)
         }
     }
-
-
 }

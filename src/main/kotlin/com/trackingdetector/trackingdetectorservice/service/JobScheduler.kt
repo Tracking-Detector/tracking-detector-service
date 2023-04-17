@@ -10,13 +10,13 @@ import org.springframework.scheduling.support.CronTrigger
 import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 
-
 @Service
-class JobScheduler(private val jobRunnable: List<JobRunnable>,
-                   private val taskScheduler: ThreadPoolTaskScheduler,
-                   private val jobMetaRepository: JobMetaRepository,
-                   private val jobRunRepository: JobRunRepository) {
-
+class JobScheduler(
+    private val jobRunnable: List<JobRunnable>,
+    private val taskScheduler: ThreadPoolTaskScheduler,
+    private val jobMetaRepository: JobMetaRepository,
+    private val jobRunRepository: JobRunRepository
+) {
 
     @PostConstruct
     private fun initScheduler() {
@@ -59,7 +59,7 @@ class JobScheduler(private val jobRunnable: List<JobRunnable>,
                 cronPattern = runnable.cronExpression,
                 lastJobRun = null,
                 enabled = true,
-                latestJobRun = null,
+                latestJobRun = null
             )
             this.jobMetaRepository.save(registerJobMeta)
         } else {
@@ -82,7 +82,7 @@ class JobScheduler(private val jobRunnable: List<JobRunnable>,
         }
     }
 
-    private fun getRunnable(jobId: String) : JobRunnable {
+    private fun getRunnable(jobId: String): JobRunnable {
         val runnable = this.jobRunnable.find {
             it.jobId == jobId
         } ?: throw Exception("Runnable for $jobId could not be found.")

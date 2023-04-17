@@ -1,10 +1,6 @@
 package com.trackingdetector.trackingdetectorservice.testSupport
 
 import com.trackingdetector.trackingdetectorservice.TestApplication
-import org.apache.xmlrpc.server.PropertyHandlerMapping
-import org.apache.xmlrpc.server.XmlRpcServer
-import org.apache.xmlrpc.server.XmlRpcServerConfigImpl
-import org.apache.xmlrpc.webserver.WebServer
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,7 +18,6 @@ import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.Duration
 
-
 @SpringJUnitConfig
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [TestApplication::class], webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8086"])
@@ -30,7 +25,7 @@ import java.time.Duration
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @Testcontainers
 @TestConfiguration
-@ContextConfiguration(classes=[TestApplication::class])
+@ContextConfiguration(classes = [TestApplication::class])
 abstract class AbstractSpringTest {
 
     companion object {
@@ -44,16 +39,20 @@ abstract class AbstractSpringTest {
             .withEnv("MINIO_ROOT_PASSWORD", minioRootPassword)
             .withCommand("server /data")
             .withExposedPorts(9000)
-            .waitingFor(HttpWaitStrategy()
-                .forPath("/minio/health/ready")
-                .forPort(9000)
-                .withStartupTimeout(Duration.ofSeconds(10)))
+            .waitingFor(
+                HttpWaitStrategy()
+                    .forPath("/minio/health/ready")
+                    .forPort(9000)
+                    .withStartupTimeout(Duration.ofSeconds(10))
+            )
+
         @BeforeTestClass
         @JvmStatic
         fun startContainers() {
             mongoDbContainer.start()
             minioContainer.start()
         }
+
         @JvmStatic
         @DynamicPropertySource
         fun setProperties(registry: DynamicPropertyRegistry) {

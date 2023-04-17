@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
-
 @Document
 data class RequestData(
     @Id
@@ -21,7 +20,7 @@ data class RequestData(
     val timeStamp: String,
     val type: String,
     val url: String,
-    val requestHeaders: List<Map<String,String>>,
+    val requestHeaders: List<Map<String, String>>,
     val success: Boolean,
-    val label: Boolean,
-    )
+    val label: Boolean
+)

@@ -1,12 +1,13 @@
 package com.trackingdetector.trackingdetectorservice.job
 
-import com.trackingdetector.trackingdetectorservice.repository.JobMetaRepository
 import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-class CleanUpJob(jobDefinition: JobDefinition,
-                 private val jobRunRepository: JobRunRepository) : JobRunnable(jobDefinition) {
+class CleanUpJob(
+    jobDefinition: JobDefinition,
+    private val jobRunRepository: JobRunRepository
+) : JobRunnable(jobDefinition) {
 
     override fun execute(jobPublisher: JobPublisher): Boolean {
         jobPublisher.info("Start loading all JobDefinitions.")

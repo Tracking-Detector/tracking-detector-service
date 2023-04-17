@@ -1,9 +1,6 @@
 package com.trackingdetector.trackingdetectorservice.job
 
 import com.trackingdetector.trackingdetectorservice.extractor.FeatureExtractor
-import com.trackingdetector.trackingdetectorservice.extractor.FeatureExtractorUtils
-import com.trackingdetector.trackingdetectorservice.repository.JobMetaRepository
-import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import com.trackingdetector.trackingdetectorservice.service.MinioService
 import com.trackingdetector.trackingdetectorservice.service.RequestDataService
 import org.springframework.context.annotation.Bean
@@ -18,11 +15,12 @@ class RequestDataExport204JobConfiguration {
         cronExpression = "0 0 12 */7 * ?"
     )
 
-
     @Bean
-    fun requestDataExport204JobRunnable(minioService: MinioService,
-                                        featureExtractor204 : FeatureExtractor,
-                                        requestDataService: RequestDataService): JobRunnable {
+    fun requestDataExport204JobRunnable(
+        minioService: MinioService,
+        featureExtractor204: FeatureExtractor,
+        requestDataService: RequestDataService
+    ): JobRunnable {
         return RequestDataExportJob(jobDefinition, minioService, featureExtractor204, requestDataService)
     }
 }

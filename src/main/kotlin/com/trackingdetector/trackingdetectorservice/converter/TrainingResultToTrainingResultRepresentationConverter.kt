@@ -5,7 +5,7 @@ import com.trackingdetector.trackingdetectorservice.representation.TrainingResul
 
 object TrainingResultToTrainingResultRepresentationConverter {
 
-    fun convert(trainingResult: TrainingResult) : TrainingResultRepresentation {
+    fun convert(trainingResult: TrainingResult): TrainingResultRepresentation {
         return TrainingResultRepresentation(trainingResult.accuracy, trainingResult.trainingRun)
     }
 }

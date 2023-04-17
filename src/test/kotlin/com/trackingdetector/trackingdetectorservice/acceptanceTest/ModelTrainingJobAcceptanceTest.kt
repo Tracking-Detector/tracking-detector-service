@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
 
-class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
+class ModelTrainingJobAcceptanceTest : AbstractSpringTest() {
 
     @Autowired
     private lateinit var jobTest: JobTest
@@ -21,7 +21,6 @@ class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
 
     @Autowired
     private lateinit var kerasModelRepository: KerasModelRepository
-
 
     @BeforeEach
     fun setUp() {
@@ -33,6 +32,7 @@ class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
     fun drillDown() {
         this.mockRpcServer.stopServer()
     }
+
     @Test
     fun should_be_skipped_when_no_models_available() {
         // given
@@ -44,24 +44,25 @@ class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
             .and()
             .jobFinishedWithStatusSkipped()
         // then
-
     }
 
     @Test
     fun should_train_model_and_store_accuracy_in_db() {
         // given
-        kerasModelRepository.save(KerasModel("someId",
-            "someModelName",
-            "someModelDescription",
-            "modelJson",
-            10,
-            10,
-            "fileName",
-            "trackingdetector",
-            "204Model"
-        ))
+        kerasModelRepository.save(
+            KerasModel(
+                "someId",
+                "someModelName",
+                "someModelDescription",
+                "modelJson",
+                10,
+                10,
+                "fileName",
+                "trackingdetector",
+                "204Model"
+            )
+        )
         val now = Instant.now().toEpochMilli()
-
 
         // when
         jobTest.startModelTrainingJob()
@@ -72,9 +73,5 @@ class ModelTrainingJobAcceptanceTest: AbstractSpringTest() {
         // then
 
         print("Super duper")
-
     }
-
-
-
 }

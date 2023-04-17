@@ -7,9 +7,11 @@ import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import org.springframework.stereotype.Service
 
 @Service
-class JobService(private val jobMetaRepository: JobMetaRepository,
+class JobService(
+    private val jobMetaRepository: JobMetaRepository,
     private val jobRunRepository: JobRunRepository,
-    private val jobScheduler: JobScheduler) {
+    private val jobScheduler: JobScheduler
+) {
 
     fun getAllJobs(): List<JobMeta> {
         return this.jobMetaRepository.findAll()
@@ -19,7 +21,7 @@ class JobService(private val jobMetaRepository: JobMetaRepository,
         return this.jobRunRepository.findAllByJobId(jobId)
     }
 
-    fun getJobMetaById(jobId: String) : JobMeta? {
+    fun getJobMetaById(jobId: String): JobMeta? {
         val job = this.jobMetaRepository.findById(jobId)
         if (job.isEmpty) {
             return null
@@ -27,7 +29,7 @@ class JobService(private val jobMetaRepository: JobMetaRepository,
         return job.get()
     }
 
-    fun triggerJobById(jobId: String) : Boolean {
+    fun triggerJobById(jobId: String): Boolean {
         return this.jobScheduler.triggerJobById(jobId)
     }
 

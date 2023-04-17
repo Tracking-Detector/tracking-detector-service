@@ -14,6 +14,5 @@ class RequestDataController(private val requestDataService: RequestDataService) 
     @PostMapping()
     fun addRequestData(@RequestBody requestDataDto: RequestDataDto) {
         this.requestDataService.createRequestData(requestDataDto)
-
     }
 }

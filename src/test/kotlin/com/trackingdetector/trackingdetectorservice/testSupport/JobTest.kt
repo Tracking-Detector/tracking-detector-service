@@ -10,19 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import org.springframework.test.web.reactive.server.WebTestClient
 import java.time.Instant
 
-
 @Component
-class JobTest (
+class JobTest(
     @Value("\${application.path}")
     private val baseUrl: String,
     private val jobMetaRepository: JobMetaRepository,
     private val jobRunRepository: JobRunRepository,
-    private val jobController: JobController,
-    ) {
-    var currentJobId : String? = null
+    private val jobController: JobController
+) {
+    var currentJobId: String? = null
     var jobStart: Instant? = null
 
     @Autowired
@@ -60,18 +58,17 @@ class JobTest (
 
     fun waitForJobCompletion(waitingThreshold: Long = 2000): JobTest {
         var jobMeta = jobMetaRepository.findById(currentJobId!!)
-        while(jobMeta.isPresent && jobMeta.get().latestJobRun == null) {
+        while (jobMeta.isPresent && jobMeta.get().latestJobRun == null) {
             Thread.sleep(waitingThreshold)
             jobMeta = jobMetaRepository.findById(currentJobId!!)
         }
         var jobRun = jobRunRepository.findById(jobMeta.get().latestJobRun!!)
-        while(jobRun.isPresent && jobRun.get().endDate == null) {
+        while (jobRun.isPresent && jobRun.get().endDate == null) {
             Thread.sleep(waitingThreshold)
             jobRun = jobRunRepository.findById(jobMeta.get().latestJobRun!!)
         }
         return this
     }
-
 
     fun jobFinishedWithStatusOk() {
         val optJobMeta = jobMetaRepository.findById(currentJobId!!)

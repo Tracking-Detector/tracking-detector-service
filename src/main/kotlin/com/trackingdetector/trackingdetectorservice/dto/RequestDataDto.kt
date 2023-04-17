@@ -13,7 +13,7 @@ data class RequestDataDto(
     val timeStamp: String,
     val type: String,
     val url: String,
-    val requestHeaders: List<Map<String,String>>,
+    val requestHeaders: List<Map<String, String>>,
     val success: Boolean,
-    val label: Boolean,
+    val label: Boolean
 )

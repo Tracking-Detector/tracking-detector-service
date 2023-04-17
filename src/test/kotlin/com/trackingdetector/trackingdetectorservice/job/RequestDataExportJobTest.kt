@@ -1,6 +1,5 @@
 package com.trackingdetector.trackingdetectorservice.job
 
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 
 class RequestDataExportJobTest {
     private lateinit var requestDataExportJob: RequestDataExportJob
@@ -23,12 +21,19 @@ class RequestDataExportJobTest {
 
     @BeforeEach
     fun setUp() {
-        Mockito.reset(jobDefinition,
-            minioService, featureExtractor,
-            requestDataService, jobPublisher)
-        requestDataExportJob = RequestDataExportJob(jobDefinition,
-            minioService, featureExtractor,
-            requestDataService)
+        Mockito.reset(
+            jobDefinition,
+            minioService,
+            featureExtractor,
+            requestDataService,
+            jobPublisher
+        )
+        requestDataExportJob = RequestDataExportJob(
+            jobDefinition,
+            minioService,
+            featureExtractor,
+            requestDataService
+        )
     }
 
     @Test

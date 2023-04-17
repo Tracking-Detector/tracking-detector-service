@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 class FeatureExtractorConfiguration {
 
     @Bean
-    fun featureExtractor204() : FeatureExtractor {
+    fun featureExtractor204(): FeatureExtractor {
         return FeatureExtractor.builder()
             .withUrlExtractor(FeatureExtractorUtils.URL_EXTRACTOR)
             .withFrameTypeExtractor(FeatureExtractorUtils.FRAME_TYPE_EXTRACTOR)

@@ -1,22 +1,21 @@
 package com.trackingdetector.trackingdetectorservice.job
 
 import com.trackingdetector.trackingdetectorservice.extractor.FeatureExtractor
-import com.trackingdetector.trackingdetectorservice.repository.JobMetaRepository
-import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import com.trackingdetector.trackingdetectorservice.service.MinioService
 import com.trackingdetector.trackingdetectorservice.service.RequestDataService
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.nio.charset.Charset
 import java.util.zip.GZIPOutputStream
 
-class RequestDataExportJob(jobDefinition: JobDefinition,
-                           private val minioService: MinioService,
-                           private val featureExtractor: FeatureExtractor,
-                           private val requestDataService: RequestDataService)
-    : JobRunnable(jobDefinition) {
+class RequestDataExportJob(
+    jobDefinition: JobDefinition,
+    private val minioService: MinioService,
+    private val featureExtractor: FeatureExtractor,
+    private val requestDataService: RequestDataService
+) :
+    JobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
         jobPublisher.info("Starting Export...")
         val amountOfData = requestDataService.getNumberOfRequestData()
@@ -35,7 +34,7 @@ class RequestDataExportJob(jobDefinition: JobDefinition,
             if (progess % 1000 == 0) {
                 jobPublisher.info("Progress: $progess/$amountOfData")
             }
-            unZippedFile.println(featureExtractor.extract(it)+"\n")
+            unZippedFile.println(featureExtractor.extract(it) + "\n")
             unZippedFile.flush()
             progess++
         }
@@ -53,7 +52,6 @@ class RequestDataExportJob(jobDefinition: JobDefinition,
         jobPublisher.info("Finished Export.")
 
         return true
-
     }
 
     private fun FileInputStream.gzipCompress(toFile: String) {
@@ -61,5 +59,4 @@ class RequestDataExportJob(jobDefinition: JobDefinition,
             it.write(this.readAllBytes().toString(Charset.defaultCharset()))
         }
     }
-
 }

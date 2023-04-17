@@ -14,7 +14,7 @@ class RequestDataService(private val requestDataRepository: RequestDataRepositor
         requestDataRepository.save(convert(requestDataDto))
     }
 
-    fun getNumberOfRequestData() : Long {
+    fun getNumberOfRequestData(): Long {
         return requestDataRepository.count()
     }
 

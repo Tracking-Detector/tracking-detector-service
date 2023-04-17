@@ -13,5 +13,4 @@ interface JobRunRepository : MongoRepository<JobRun, String> {
     fun findAllByStartDateBefore(time: Instant): List<JobRun>
 
     fun findAllByJobIdOrderByEndDateAsc(jobId: String): List<JobRun>
-
 }

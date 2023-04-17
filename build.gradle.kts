@@ -1,8 +1,10 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "2.7.10"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    id("org.jlleitschuh.gradle.ktlint") version "11.2.0"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
 }
@@ -25,7 +27,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework:spring-webmvc:6.0.7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation ("org.jetbrains.kotlinx:kotlin-deeplearning-tensorflow:0.5.1")
+    implementation("org.jetbrains.kotlinx:kotlin-deeplearning-tensorflow:0.5.1")
     implementation("io.minio:minio:8.5.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.apache.xmlrpc:xmlrpc-server:3.1.3")
@@ -41,6 +43,14 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.23.0")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
 }
+ktlint {
+    debug.set(false)
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+    android.set(false)
+    verbose.set(false)
+    enableExperimentalRules.set(false)
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -53,5 +63,24 @@ tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
+    }
+}
+
+tasks {
+    val ktlint by registering {
+        group = "verification"
+        description = "Runs KtLint on Kotlin sources."
+        inputs.files(fileTree("src/main/kotlin"))
+        outputs.dir(file("$buildDir/ktlint"))
+        doLast {
+            project.exec {
+                this.commandLine = listOf(
+                    "./gradlew",
+                    "ktlintCheck",
+                    "--reporter=plain",
+                    "--color=always"
+                )
+            }
+        }
     }
 }

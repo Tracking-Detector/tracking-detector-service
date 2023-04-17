@@ -6,11 +6,12 @@ import com.trackingdetector.trackingdetectorservice.representation.KerasModelRep
 
 object KerasModelToKerasModelRepresentationConverter {
 
-    fun convert(model: KerasModel, trainingResults: List<TrainingResult>) : KerasModelRepresentation {
+    fun convert(model: KerasModel, trainingResults: List<TrainingResult>): KerasModelRepresentation {
         val mappedTrainingResults = trainingResults
             .map(TrainingResultToTrainingResultRepresentationConverter::convert)
             .toList()
-        return KerasModelRepresentation(model.id,
+        return KerasModelRepresentation(
+            model.id,
             model.modelName,
             model.modelDescription,
             model.modelJson,
@@ -19,6 +20,7 @@ object KerasModelToKerasModelRepresentationConverter {
             model.trainingDataFilename,
             model.applicationName,
             model.modelStorageName,
-            mappedTrainingResults)
+            mappedTrainingResults
+        )
     }
 }

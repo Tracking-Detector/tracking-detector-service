@@ -2,7 +2,6 @@ package com.trackingdetector.trackingdetectorservice.extractor
 
 import com.trackingdetector.trackingdetectorservice.domain.RequestData
 
-
 open class FeatureExtractor private constructor(
     private val sequence: List<ExtractorTypes>,
     private val documentId: ((String) -> List<Int>)?,
@@ -17,14 +16,14 @@ open class FeatureExtractor private constructor(
     private val timeStamp: ((String) -> List<Int>)?,
     private val type: ((String) -> List<Int>)?,
     private val url: ((String) -> List<Int>)?,
-    private val requestHeaders: ((List<Map<String, String>>) -> List<Int>)?,// TODO ADD RESPONSE
+    private val requestHeaders: ((List<Map<String, String>>) -> List<Int>)?, // TODO ADD RESPONSE
     private val success: ((Boolean) -> List<Int>)?,
     private val label: ((Boolean) -> List<Int>)?
 ) {
 
     companion object FeatureExtractor {
 
-        fun builder() : FeatureExtractorBuilder {
+        fun builder(): FeatureExtractorBuilder {
             return FeatureExtractorBuilder()
         }
 
@@ -53,7 +52,6 @@ open class FeatureExtractor private constructor(
             // TODO ADD RESPONSE
             private var success: ((Boolean) -> List<Int>)? = null
             private var label: ((Boolean) -> List<Int>)? = null
-
 
             fun withDocumentIdExtractor(documentIdExtractor: (String) -> List<Int>): FeatureExtractorBuilder {
                 this.documentId = documentIdExtractor
@@ -132,7 +130,6 @@ open class FeatureExtractor private constructor(
                 this.sequence.add(ExtractorTypes.REQUEST_HEADERS)
                 return this
             }
-
 
             fun withSuccessExtractor(successExtractor: (Boolean) -> List<Int>): FeatureExtractorBuilder {
                 this.success = successExtractor
@@ -279,18 +276,18 @@ open class FeatureExtractor private constructor(
         return label.invoke(requestData.label)
     }
 
-    private fun extractVariable(requestData: RequestData, currentProperty: ExtractorTypes) : List<Int> {
-        when(currentProperty) {
+    private fun extractVariable(requestData: RequestData, currentProperty: ExtractorTypes): List<Int> {
+        when (currentProperty) {
             ExtractorTypes.DOCUMENT_ID -> return extractDocumentId(requestData)
             ExtractorTypes.DOCUMENT_LIFECYCLE -> return extractDocumentLifecycle(requestData)
             ExtractorTypes.FRAME_ID -> return extractFrameId(requestData)
             ExtractorTypes.FRAME_TYPE -> return extractFrameType(requestData)
             ExtractorTypes.INITIATOR -> return extractInitiator(requestData)
-            ExtractorTypes.METHOD-> return extractMethod(requestData)
+            ExtractorTypes.METHOD -> return extractMethod(requestData)
             ExtractorTypes.PARENT_FRAME_ID -> return extractParentFrameId(requestData)
             ExtractorTypes.REQUEST_ID -> return extractRequestId(requestData)
-            ExtractorTypes.TAB_ID-> return extractTabId(requestData)
-            ExtractorTypes.TIME_STAMP-> return extractTimeStamp(requestData)
+            ExtractorTypes.TAB_ID -> return extractTabId(requestData)
+            ExtractorTypes.TIME_STAMP -> return extractTimeStamp(requestData)
             ExtractorTypes.TYPE -> return extractType(requestData)
             ExtractorTypes.URL -> return extractUrl(requestData)
             ExtractorTypes.REQUEST_HEADERS -> return extractRequestHeaders(requestData)
@@ -299,7 +296,7 @@ open class FeatureExtractor private constructor(
         }
     }
 
-    open fun extract(requestData: RequestData) : String {
+    open fun extract(requestData: RequestData): String {
         return this.sequence.map {
             extractVariable(requestData, it)
         }.reduce { acc: List<Int>, ints: List<Int> ->
