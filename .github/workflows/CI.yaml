@@ -65,7 +65,7 @@ jobs:
       - name: Build
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: build
+          arguments: jar
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build Docker image
