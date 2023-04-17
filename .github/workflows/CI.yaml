@@ -63,9 +63,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        uses: gradle/gradle-build-action@v4
         with:
-          arguments: jar
+          arguments: --build-cache jar
       - name: Checkout code
         uses: actions/checkout@v2
       - name: ls
