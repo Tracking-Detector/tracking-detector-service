@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -15,6 +14,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
+    google()
 }
 extra["testcontainersVersion"] = "1.17.6"
 
@@ -43,6 +43,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.23.0")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
 }
+
 ktlint {
     debug.set(false)
     outputToConsole.set(true)
