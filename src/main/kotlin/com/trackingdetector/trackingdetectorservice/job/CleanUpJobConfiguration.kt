@@ -14,7 +14,7 @@ class CleanUpJobConfiguration {
     )
 
     @Bean
-    fun cleanUpJobRunnable(jobRunRepository: JobRunRepository): JobRunnable {
-        return CleanUpJob(jobDefinition, jobRunRepository)
+    fun cleanUpJobRunnable(jobRunRepository: JobRunRepository): AbstractJobRunnable {
+        return CleanUpAbstractJob(jobDefinition, jobRunRepository)
     }
 }

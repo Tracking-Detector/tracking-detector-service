@@ -1,6 +1,6 @@
 package com.trackingdetector.trackingdetectorservice.extractor
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class FeatureExtractorUtilsTest {
@@ -8,7 +8,10 @@ class FeatureExtractorUtilsTest {
     @Test
     fun should_extract_url_exactly_as_in_node_when_smaller() {
         // given
-        val url = "https://bat.bing.com/actionp/0?ti=17550024&Ver=2&mid=08bdac16-6066-4298-be0e-2fc4477e74e6&sid=f99ac5901a2711ed8deb51e4b6913687&vid=f99b7ed01a2711edab50617d53bfba7b&vids=1&msclkid=N&evt=pageHide"
+        val url = "https://bat.bing.com/actionp/0?ti=17550024&Ver=2&mid" +
+            "=08bdac16-6066-4298-be0e-2fc4477e74e6&sid=f99ac5901a2711ed" +
+            "8deb51e4b6913687&vid=f99b7ed01a2711edab50617d53bfba7b&v" +
+            "ids=1&msclkid=N&evt=pageHide"
         // when
         val result = FeatureExtractorUtils.URL_EXTRACTOR(url)
         // then
@@ -20,7 +23,13 @@ class FeatureExtractorUtilsTest {
     @Test
     fun should_extract_url_exactly_as_in_node_when_bigger() {
         // given
-        val url = "https://region1.google-analytics.com/g/collect?v=2&tid=G-0P6ZGEWQVE&gtm=2oe880&_p=1729724280&cid=939202449.1660299502&ul=en-us&sr=1920x1200&_z=ccd.v9B&_s=1&sid=1660299502&sct=1&seg=0&dl=https%3A%2F%2Fwww.scientificamerican.com%2F&dt=Scientific%20American%3A%20Science%20News%2C%20Expert%20Analysis%2C%20Health%20Research%20-%20Scientific%20American&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1"
+        val url = "https://region1.google-analytics.com/g/collect?" +
+            "v=2&tid=G-0P6ZGEWQVE&gtm=2oe880&_p=1729724280&cid=939202449" +
+            ".1660299502&ul=en-us&sr=1920x1200&_z=ccd.v9B&_s=1&sid" +
+            "=1660299502&sct=1&seg=0&dl=https%3A%2F%2Fwww.scientificamerican." +
+            "com%2F&dt=Scientific%20American%3A%20Science%20News%2C%20Expert%20" +
+            "Analysis%2C%20Health%20Research%20-%20Scientific%20American&en=" +
+            "page_view&_fv=1&_nsi=1&_ss=1&_ee=1"
         // when
         val result = FeatureExtractorUtils.URL_EXTRACTOR(url)
         // then

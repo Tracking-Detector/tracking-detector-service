@@ -9,13 +9,13 @@ import java.io.FileOutputStream
 import java.nio.charset.Charset
 import java.util.zip.GZIPOutputStream
 
-class RequestDataExportJob(
+class RequestDataExportAbstractJob(
     jobDefinition: JobDefinition,
     private val minioService: MinioService,
     private val featureExtractor: FeatureExtractor,
     private val requestDataService: RequestDataService
 ) :
-    JobRunnable(jobDefinition) {
+    AbstractJobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
         jobPublisher.info("Starting Export...")
         val amountOfData = requestDataService.getNumberOfRequestData()

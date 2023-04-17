@@ -1,6 +1,12 @@
 package com.trackingdetector.trackingdetectorservice.service
 
-import io.minio.*
+import io.minio.BucketExistsArgs
+import io.minio.GetObjectArgs
+import io.minio.GetObjectResponse
+import io.minio.MakeBucketArgs
+import io.minio.MinioClient
+import io.minio.SetBucketVersioningArgs
+import io.minio.UploadObjectArgs
 import io.minio.messages.VersioningConfiguration
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service

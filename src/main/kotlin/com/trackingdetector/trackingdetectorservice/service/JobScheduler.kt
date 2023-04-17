@@ -1,8 +1,8 @@
 package com.trackingdetector.trackingdetectorservice.service
 
 import com.trackingdetector.trackingdetectorservice.domain.JobMeta
+import com.trackingdetector.trackingdetectorservice.job.AbstractJobRunnable
 import com.trackingdetector.trackingdetectorservice.job.JobPublisher
-import com.trackingdetector.trackingdetectorservice.job.JobRunnable
 import com.trackingdetector.trackingdetectorservice.repository.JobMetaRepository
 import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct
 
 @Service
 class JobScheduler(
-    private val jobRunnable: List<JobRunnable>,
+    private val abstractJobRunnable: List<AbstractJobRunnable>,
     private val taskScheduler: ThreadPoolTaskScheduler,
     private val jobMetaRepository: JobMetaRepository,
     private val jobRunRepository: JobRunRepository
@@ -20,13 +20,13 @@ class JobScheduler(
 
     @PostConstruct
     private fun initScheduler() {
-        for (runnable in jobRunnable) {
+        for (runnable in abstractJobRunnable) {
             registerJob(runnable)
             taskScheduler.schedule({ start(runnable) }, CronTrigger(runnable.cronExpression))
         }
     }
 
-    private fun start(runnable: JobRunnable) {
+    private fun start(runnable: AbstractJobRunnable) {
         val jobMeta = this.jobMetaRepository.findById(runnable.jobId).get()
         if (!jobMeta.enabled || jobMeta.latestJobRun != null) {
             return
@@ -49,7 +49,7 @@ class JobScheduler(
         }
     }
 
-    private fun registerJob(runnable: JobRunnable) {
+    private fun registerJob(runnable: AbstractJobRunnable) {
         val optionalJobMeta = this.jobMetaRepository.findById(runnable.jobId)
         if (optionalJobMeta.isEmpty) {
             val registerJobMeta = JobMeta(
@@ -82,8 +82,8 @@ class JobScheduler(
         }
     }
 
-    private fun getRunnable(jobId: String): JobRunnable {
-        val runnable = this.jobRunnable.find {
+    private fun getRunnable(jobId: String): AbstractJobRunnable {
+        val runnable = this.abstractJobRunnable.find {
             it.jobId == jobId
         } ?: throw Exception("Runnable for $jobId could not be found.")
         return runnable

@@ -20,7 +20,7 @@ class RequestDataExport204JobConfiguration {
         minioService: MinioService,
         featureExtractor204: FeatureExtractor,
         requestDataService: RequestDataService
-    ): JobRunnable {
-        return RequestDataExportJob(jobDefinition, minioService, featureExtractor204, requestDataService)
+    ): AbstractJobRunnable {
+        return RequestDataExportAbstractJob(jobDefinition, minioService, featureExtractor204, requestDataService)
     }
 }

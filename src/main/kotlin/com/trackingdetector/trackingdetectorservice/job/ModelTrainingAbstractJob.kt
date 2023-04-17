@@ -5,13 +5,13 @@ import com.trackingdetector.trackingdetectorservice.service.KerasModelService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import org.apache.xmlrpc.client.XmlRpcClient
 
-class ModelTrainingJob(
+class ModelTrainingAbstractJob(
     jobDefinition: JobDefinition,
     private val xmlRpcClient: XmlRpcClient,
     private val kerasModelService: KerasModelService,
     private val trainingResultService: TrainingResultService,
     private val methodName: String
-) : JobRunnable(jobDefinition) {
+) : AbstractJobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
         val allModels = kerasModelService.getAllKerasModels()
 
