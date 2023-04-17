@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+    - gradle/lib
+
 jobs:
   lint:
     runs-on: ubuntu-latest
