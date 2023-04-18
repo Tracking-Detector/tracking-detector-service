@@ -65,6 +65,19 @@ object FeatureExtractorUtils {
         listOf(isReferred)
     }
 
+    val INITIATOR_EXTRACTOR: (String) -> List<Int> = {
+        var encoding: MutableList<Int> = mutableListOf()
+        for (char in it.toCharArray()) {
+            encoding.add((char.code % 89) + 1)
+        }
+        if (encoding.size < 20) {
+            encoding = (MutableList(20 - encoding.size) { 0 } + encoding).toMutableList()
+        } else if (encoding.size > 20) {
+            encoding = encoding.subList(encoding.size - 20, encoding.size)
+        }
+        encoding.toList()
+    }
+
     val LABEL_EXTRACTOR: (Boolean) -> List<Int> = {
         listOf(if (it) 1 else 0)
     }

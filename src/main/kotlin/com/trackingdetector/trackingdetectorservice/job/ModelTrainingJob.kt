@@ -5,7 +5,7 @@ import com.trackingdetector.trackingdetectorservice.service.KerasModelService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import org.apache.xmlrpc.client.XmlRpcClient
 
-class ModelTrainingAbstractJob(
+class ModelTrainingJob(
     jobDefinition: JobDefinition,
     private val xmlRpcClient: XmlRpcClient,
     private val kerasModelService: KerasModelService,

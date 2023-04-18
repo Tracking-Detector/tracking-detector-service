@@ -12,11 +12,16 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/tracking-detector")
-class ModelDownloadController(private val minioService: MinioService) {
+class DownloadController(private val minioService: MinioService) {
 
-    @GetMapping("/files")
+    @GetMapping("/files/models")
     @CrossOrigin(origins = ["*"])
     fun getModels() {
+    }
+
+    @GetMapping("/files/trainingData")
+    @CrossOrigin(origins = ["*"])
+    fun getTrainingData() {
     }
 
     @GetMapping("/files/models/{folder}/{object}")

@@ -19,4 +19,17 @@ class FeatureExtractorConfiguration {
             .withLabelExtractor(FeatureExtractorUtils.LABEL_EXTRACTOR)
             .build()
     }
+
+    @Bean
+    fun featureExtractor224(): FeatureExtractor {
+        return FeatureExtractor.builder()
+            .withUrlExtractor(FeatureExtractorUtils.URL_EXTRACTOR)
+            .withInitiatorExtractor(FeatureExtractorUtils.INITIATOR_EXTRACTOR)
+            .withFrameTypeExtractor(FeatureExtractorUtils.FRAME_TYPE_EXTRACTOR)
+            .withMethodExtractor(FeatureExtractorUtils.METHOD_EXTRACTOR)
+            .withTypeExtractor(FeatureExtractorUtils.TYPE_EXTRACTOR)
+            .withRequestHeadersExtractor(FeatureExtractorUtils.REQUEST_HEADER_REFERER)
+            .withLabelExtractor(FeatureExtractorUtils.LABEL_EXTRACTOR)
+            .build()
+    }
 }

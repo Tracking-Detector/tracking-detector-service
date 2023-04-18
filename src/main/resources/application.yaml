@@ -3,6 +3,10 @@ service:
 
 server:
   port: 3000
+  tomcat:
+    threads:
+      min-spare: 30
+      max: 400
 
 spring:
   data:

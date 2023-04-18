@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 import java.util.*
 
-@Document()
+@Document
 data class JobRun(
     @Id
     val id: String = UUID.randomUUID().toString(),

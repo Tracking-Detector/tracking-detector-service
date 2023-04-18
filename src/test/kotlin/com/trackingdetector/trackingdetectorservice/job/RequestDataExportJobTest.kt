@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class RequestDataExportJobTest {
-    private lateinit var requestDataExportJob: RequestDataExportAbstractJob
+    private lateinit var requestDataExportJob: RequestDataExportJob
     private val jobDefinition: JobDefinition = mock()
     private val minioService: MinioService = mock()
     private val featureExtractor: FeatureExtractor = mock()
@@ -28,7 +28,7 @@ class RequestDataExportJobTest {
             requestDataService,
             jobPublisher
         )
-        requestDataExportJob = RequestDataExportAbstractJob(
+        requestDataExportJob = RequestDataExportJob(
             jobDefinition,
             minioService,
             featureExtractor,

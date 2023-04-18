@@ -4,7 +4,7 @@ import com.trackingdetector.trackingdetectorservice.repository.JobRunRepository
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-class CleanUpAbstractJob(
+class CleanUpJob(
     jobDefinition: JobDefinition,
     private val jobRunRepository: JobRunRepository
 ) : AbstractJobRunnable(jobDefinition) {

@@ -49,11 +49,11 @@ class MinioService(
         this.initBucket(this.modelBucket)
     }
 
-    fun putCompressedTrainingData(filePath: String) {
+    fun putCompressedTrainingData(fileName: String, filePath: String) {
         this.minioClient.uploadObject(
             UploadObjectArgs.builder()
                 .bucket(this.trainingDataBucket)
-                .`object`("training-data.csv.gz")
+                .`object`(fileName)
                 .filename(filePath)
                 .build()
         )

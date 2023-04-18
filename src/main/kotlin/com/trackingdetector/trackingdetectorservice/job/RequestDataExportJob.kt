@@ -9,11 +9,12 @@ import java.io.FileOutputStream
 import java.nio.charset.Charset
 import java.util.zip.GZIPOutputStream
 
-class RequestDataExportAbstractJob(
+class RequestDataExportJob(
     jobDefinition: JobDefinition,
     private val minioService: MinioService,
     private val featureExtractor: FeatureExtractor,
-    private val requestDataService: RequestDataService
+    private val requestDataService: RequestDataService,
+    private val fileName: String
 ) :
     AbstractJobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
@@ -44,7 +45,7 @@ class RequestDataExportAbstractJob(
         File(unZippedFilename).inputStream().gzipCompress(zippedFilename)
         jobPublisher.info("Finished zipping File.")
         jobPublisher.info("Starting upload to bucket.")
-        this.minioService.putCompressedTrainingData(zippedFilename)
+        this.minioService.putCompressedTrainingData(fileName, zippedFilename)
         jobPublisher.info("Finished uploading compressed training data.")
         jobPublisher.info("Start cleaning up.")
         File(unZippedFilename).delete()

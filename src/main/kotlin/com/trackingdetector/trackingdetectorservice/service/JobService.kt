@@ -18,7 +18,7 @@ class JobService(
     }
 
     fun getAllJobRunsForJob(jobId: String): List<JobRun> {
-        return this.jobRunRepository.findAllByJobId(jobId)
+        return this.jobRunRepository.findAllByJobIdOrderByStartDateDesc(jobId)
     }
 
     fun getJobMetaById(jobId: String): JobMeta? {

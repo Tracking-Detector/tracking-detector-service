@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Configuration
 import javax.annotation.PostConstruct
 
 @Configuration
-class RequestDataExport204JobConfiguration(private val trainingFileRepository: TrainingFileRepository) {
+class RequestDataExport224JobConfiguration(private val trainingFileRepository: TrainingFileRepository) {
 
-    val jobDefinition = JobDefinition(
-        jobName = "RequestDataExport204Job",
-        jobDescription = "Exports the requests data into a csv with a feature vector of size [204, 1].",
+    private val jobDefinition = JobDefinition(
+        jobName = "RequestDataExport224Job",
+        jobDescription = "Exports the requests data into a csv with a feature vector of size [224, 1].",
         cronExpression = "0 0 12 */7 * ?"
     )
 
-    val fileName = "trainingData204.csv.gz"
+    private val fileName = "trainingData224.csv.gz"
 
     @PostConstruct
     fun initFile() {
@@ -27,7 +27,7 @@ class RequestDataExport204JobConfiguration(private val trainingFileRepository: T
             TrainingFile(
                 HashUtils.sha256(fileName),
                 fileName,
-                "This file includes vectors of 204 features and 1 label at the end in a csv format."
+                "This file includes vectors of 224 features and 1 label at the end in a csv format."
             )
         )
     }
@@ -35,9 +35,9 @@ class RequestDataExport204JobConfiguration(private val trainingFileRepository: T
     @Bean
     fun requestDataExport204JobRunnable(
         minioService: MinioService,
-        featureExtractor204: FeatureExtractor,
+        featureExtractor224: FeatureExtractor,
         requestDataService: RequestDataService
     ): AbstractJobRunnable {
-        return RequestDataExportJob(jobDefinition, minioService, featureExtractor204, requestDataService, fileName)
+        return RequestDataExportJob(jobDefinition, minioService, featureExtractor224, requestDataService, fileName)
     }
 }

@@ -22,6 +22,6 @@ class ModelTrainingJobConfiguration {
         trainingResultService: TrainingResultService,
         @Value("\${rpc.method}") methodName: String
     ): AbstractJobRunnable {
-        return ModelTrainingAbstractJob(jobDefinition, xmlRpcClient, kerasModelService, trainingResultService, methodName)
+        return ModelTrainingJob(jobDefinition, xmlRpcClient, kerasModelService, trainingResultService, methodName)
     }
 }
