@@ -28,7 +28,7 @@ rpc:
 
 minio:
   url: ${MINIO_URL}
-  port: 8080
+  port: ${MINIO_PORT}
   accessKey: ${MINIO_ACCESS_KEY}
   privateKey: ${MINIO_PRIVATE_KEY}
 

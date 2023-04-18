@@ -24,6 +24,7 @@ It exposes the following environment variables for you to configure:
 ### MINIO
 
 * MINIO_URL -> Minio URL
+* MINIO_PORT -> Minio PORT
 * MINIO_ACCESS_KEY -> Minio Public Key
 * MINIO_PRIVATE_KEY -> Minio Private Key
 * TRAINING_DATA_BUCKET -> Bucket name for the exported training data
