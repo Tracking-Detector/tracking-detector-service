@@ -7,6 +7,7 @@ import com.trackingdetector.trackingdetectorservice.service.TrainingFileService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import com.trackingdetector.trackingdetectorservice.util.HashUtils
 import org.apache.xmlrpc.client.XmlRpcClient
+import java.time.Instant
 
 class ModelTrainingJob(
     jobDefinition: JobDefinition,
@@ -51,9 +52,13 @@ class ModelTrainingJob(
                     model.epochs
                 )
             ) as HashMap<*, *>
-
+            if (result["error"] != null) {
+                jobPublisher.info(result["log"] as String)
+                jobPublisher.error("Error occurred in python training script: ${result["error"] as String}")
+                continue
+            }
             jobPublisher.info(result["log"] as String)
-            val trainingResult = TrainingResult.fromHashMap(model.id, result)
+            val trainingResult = TrainingResult.fromHashMap(model.id, Instant.now(), result)
             jobPublisher.info("Finished training ${model.modelName} with an accuracy of: ${trainingResult.accuracy}.")
             trainingResultService.createTrainingResult(trainingResult)
             jobPublisher.info("Finished training of ${model.modelStorageName}")
