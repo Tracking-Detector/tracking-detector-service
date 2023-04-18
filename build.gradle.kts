@@ -1,3 +1,5 @@
+import com.bmuschko.gradle.docker.shaded.com.google.common.cache.CacheBuilder.from
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -52,6 +54,13 @@ ktlint {
     android.set(false)
     verbose.set(false)
     enableExperimentalRules.set(false)
+}
+
+docker {
+    springBootApplication {
+        baseImage.set("openjdk:17-jdk-alpine")
+        ports.set(listOf(3000))
+    }
 }
 
 tasks.withType<KotlinCompile> {
