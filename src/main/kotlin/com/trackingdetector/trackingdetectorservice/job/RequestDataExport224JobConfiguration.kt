@@ -33,7 +33,7 @@ class RequestDataExport224JobConfiguration(private val trainingFileRepository: T
     }
 
     @Bean
-    fun requestDataExport204JobRunnable(
+    fun requestDataExport224JobRunnable(
         minioService: MinioService,
         featureExtractor224: FeatureExtractor,
         requestDataService: RequestDataService

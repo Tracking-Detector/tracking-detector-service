@@ -32,7 +32,8 @@ class RequestDataExportJobTest {
             jobDefinition,
             minioService,
             featureExtractor,
-            requestDataService
+            requestDataService,
+            "someFileName.csv.gz"
         )
     }
 

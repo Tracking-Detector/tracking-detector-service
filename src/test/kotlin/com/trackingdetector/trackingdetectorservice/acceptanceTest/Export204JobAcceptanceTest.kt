@@ -72,7 +72,7 @@ class Export204JobAcceptanceTest : AbstractSpringTest() {
             .jobFinishedWithStatusOk()
 
         // then
-        val content = minioTest.getContentOfFile(trainingBucket, "training-data.csv.gz")
+        val content = minioTest.getContentOfFile(trainingBucket, "trainingData204.csv.gz")
         val expectedCsvRow = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," +
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," +
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," +
