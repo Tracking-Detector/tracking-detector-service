@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-@RequestMapping("tracking-detector")
+@RequestMapping("/tracking-detector")
 class KerasModelController(private val kerasModelService: KerasModelService, private val trainingResultService: TrainingResultService) {
 
-    @GetMapping("models")
+    @GetMapping("/models")
     fun getAllModels(): List<KerasModelRepresentation> {
         return kerasModelService.getAllKerasModels().map {
             val runs = trainingResultService.getAllTrainingResultsForModel(it.id)
@@ -29,7 +29,7 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
         }.toList()
     }
 
-    @GetMapping("models/{id}")
+    @GetMapping("/models/{id}")
     fun getModelById(@PathVariable id: String): KerasModelRepresentation {
         try {
             val kerasModel = kerasModelService.getKerasModelById(id)
@@ -40,7 +40,7 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
         }
     }
 
-    @PostMapping("models", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/models", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun createModel(@RequestBody kerasModelDto: KerasModelDto): ResponseEntity<String> {
         try {
             kerasModelService.createKerasModel(kerasModelDto)
@@ -50,7 +50,7 @@ class KerasModelController(private val kerasModelService: KerasModelService, pri
         }
     }
 
-    @PutMapping("models/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PutMapping("/models/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun updateModel(@RequestBody kerasModelDto: KerasModelDto, @PathVariable id: String): ResponseEntity<String> {
         try {
             kerasModelService.createKerasModel(kerasModelDto)

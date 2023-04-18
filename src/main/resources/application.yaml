@@ -1,12 +1,6 @@
 service:
   name: tracking-detector
 
-application:
-  path: ${base.url}
-
-base:
-  url: http://localhost:${server.port}
-
 server:
   port: 3000
 
