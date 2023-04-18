@@ -28,8 +28,18 @@ class JobScheduler(
 
     private fun start(runnable: AbstractJobRunnable) {
         val jobMeta = this.jobMetaRepository.findById(runnable.jobId).get()
-        if (!jobMeta.enabled || jobMeta.latestJobRun != null) {
+        if (!jobMeta.enabled) {
             return
+        }
+        if (jobMeta.latestJobRun != null) {
+            val optRun = jobRunRepository.findById(jobMeta.latestJobRun!!)
+            if (optRun.isEmpty) {
+                return
+            }
+            val run = optRun.get()
+            if (run.status == "RUNNING") {
+                return
+            }
         }
         val publisher = JobPublisher.build(runnable.jobId, jobMetaRepository, jobRunRepository)
         try {
