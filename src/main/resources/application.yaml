@@ -2,14 +2,12 @@ service:
   name: tracking-detector
 
 application:
-  path: ${base.url}${server.servlet.context-path}
+  path: ${base.url}
 
 base:
   url: http://localhost:${server.port}
 
 server:
-  servlet:
-    context-path: /${service.name}
   port: 3000
 
 spring:

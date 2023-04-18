@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/requests")
+@RequestMapping("tracking-detector")
 class RequestDataController(private val requestDataService: RequestDataService) {
 
-    @PostMapping()
+    @PostMapping("requests")
     fun addRequestData(@RequestBody requestDataDto: RequestDataDto) {
         this.requestDataService.createRequestData(requestDataDto)
     }
