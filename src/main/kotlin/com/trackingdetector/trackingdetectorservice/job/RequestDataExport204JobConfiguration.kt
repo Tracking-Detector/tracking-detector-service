@@ -27,7 +27,8 @@ class RequestDataExport204JobConfiguration(private val trainingFileRepository: T
             TrainingFile(
                 HashUtils.sha256(fileName),
                 fileName,
-                "This file includes vectors of 204 features and 1 label at the end in a csv format."
+                "This file includes vectors of 204 features and 1 label at the end in a csv format.",
+                204
             )
         )
     }

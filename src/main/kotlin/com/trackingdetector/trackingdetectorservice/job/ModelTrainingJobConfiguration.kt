@@ -1,6 +1,8 @@
 package com.trackingdetector.trackingdetectorservice.job
 
 import com.trackingdetector.trackingdetectorservice.service.KerasModelService
+import com.trackingdetector.trackingdetectorservice.service.MinioService
+import com.trackingdetector.trackingdetectorservice.service.TrainingFileService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
 import org.apache.xmlrpc.client.XmlRpcClient
 import org.springframework.beans.factory.annotation.Value
@@ -20,8 +22,10 @@ class ModelTrainingJobConfiguration {
         xmlRpcClient: XmlRpcClient,
         kerasModelService: KerasModelService,
         trainingResultService: TrainingResultService,
+        trainingFileService: TrainingFileService,
+        minioService: MinioService,
         @Value("\${rpc.method}") methodName: String
     ): AbstractJobRunnable {
-        return ModelTrainingJob(jobDefinition, xmlRpcClient, kerasModelService, trainingResultService, methodName)
+        return ModelTrainingJob(jobDefinition, xmlRpcClient, kerasModelService, trainingResultService, trainingFileService, minioService, methodName)
     }
 }

@@ -2,7 +2,10 @@ package com.trackingdetector.trackingdetectorservice.job
 
 import com.trackingdetector.trackingdetectorservice.domain.TrainingResult
 import com.trackingdetector.trackingdetectorservice.service.KerasModelService
+import com.trackingdetector.trackingdetectorservice.service.MinioService
+import com.trackingdetector.trackingdetectorservice.service.TrainingFileService
 import com.trackingdetector.trackingdetectorservice.service.TrainingResultService
+import com.trackingdetector.trackingdetectorservice.util.HashUtils
 import org.apache.xmlrpc.client.XmlRpcClient
 
 class ModelTrainingJob(
@@ -10,6 +13,8 @@ class ModelTrainingJob(
     private val xmlRpcClient: XmlRpcClient,
     private val kerasModelService: KerasModelService,
     private val trainingResultService: TrainingResultService,
+    private val trainingFileService: TrainingFileService,
+    private val minioService: MinioService,
     private val methodName: String
 ) : AbstractJobRunnable(jobDefinition) {
     override fun execute(jobPublisher: JobPublisher): Boolean {
@@ -23,6 +28,17 @@ class ModelTrainingJob(
         jobPublisher.info("Found ${allModels.size} Models to train.")
         for (model in allModels) {
             jobPublisher.info("Started training of ${model.modelStorageName}")
+
+            val trainingFile = trainingFileService.getFileById(HashUtils.sha256(model.trainingDataFilename))
+            if (trainingFile.isEmpty) {
+                jobPublisher.warn("The specified training file ${model.trainingDataFilename} is not available. Cannot train model without data.")
+                continue
+            }
+            if (!minioService.isTrainingFileAvailable(trainingFile.get().fileName)) {
+                jobPublisher.warn("The specified training file ${model.trainingDataFilename} is not available in the minio bucket. Cannot train model without data.")
+                continue
+            }
+
             val result = xmlRpcClient.execute(
                 methodName,
                 listOf(
@@ -30,6 +46,7 @@ class ModelTrainingJob(
                     model.modelStorageName,
                     model.trainingDataFilename,
                     model.modelJson,
+                    trainingFile.get().vectorLength,
                     model.batchSize,
                     model.epochs
                 )

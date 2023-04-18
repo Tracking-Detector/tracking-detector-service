@@ -8,5 +8,6 @@ data class TrainingFile(
     @Id
     val id: String,
     val fileName: String,
-    val fileDescription: String
+    val fileDescription: String,
+    val vectorLength: Int
 )

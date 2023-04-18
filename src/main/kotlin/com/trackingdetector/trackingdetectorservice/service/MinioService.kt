@@ -3,6 +3,7 @@ package com.trackingdetector.trackingdetectorservice.service
 import io.minio.BucketExistsArgs
 import io.minio.GetObjectArgs
 import io.minio.GetObjectResponse
+import io.minio.ListObjectsArgs
 import io.minio.MakeBucketArgs
 import io.minio.MinioClient
 import io.minio.SetBucketVersioningArgs
@@ -66,5 +67,17 @@ class MinioService(
                 .`object`("$modelFolder/$fileName")
                 .build()
         )
+    }
+
+    fun isTrainingFileAvailable(fileName: String): Boolean {
+        val response = this.minioClient.listObjects(
+            ListObjectsArgs.builder()
+                .bucket(this.trainingDataBucket)
+                .build()
+        )
+        val testObject = response.toList().find {
+            it.get().objectName() == fileName
+        }
+        return testObject == null
     }
 }

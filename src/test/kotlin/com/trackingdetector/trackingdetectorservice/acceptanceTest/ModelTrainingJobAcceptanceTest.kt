@@ -4,6 +4,7 @@ import com.trackingdetector.trackingdetectorservice.domain.KerasModel
 import com.trackingdetector.trackingdetectorservice.repository.KerasModelRepository
 import com.trackingdetector.trackingdetectorservice.testSupport.AbstractSpringTest
 import com.trackingdetector.trackingdetectorservice.testSupport.JobTest
+import com.trackingdetector.trackingdetectorservice.testSupport.MinioTest
 import com.trackingdetector.trackingdetectorservice.testSupport.MockXMLRPCServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -21,6 +22,9 @@ class ModelTrainingJobAcceptanceTest : AbstractSpringTest() {
 
     @Autowired
     private lateinit var kerasModelRepository: KerasModelRepository
+
+    @Autowired
+    private lateinit var minioTest: MinioTest
 
     @BeforeEach
     fun setUp() {
@@ -49,6 +53,7 @@ class ModelTrainingJobAcceptanceTest : AbstractSpringTest() {
     @Test
     fun should_train_model_and_store_accuracy_in_db() {
         // given
+        minioTest.putFileIntoBucket("training", "trainingData204.csv.gz")
         kerasModelRepository.save(
             KerasModel(
                 "someId",
@@ -57,11 +62,12 @@ class ModelTrainingJobAcceptanceTest : AbstractSpringTest() {
                 "modelJson",
                 10,
                 10,
-                "fileName",
+                "trainingData204.csv.gz",
                 "trackingdetector",
                 "204Model"
             )
         )
+
         val now = Instant.now().toEpochMilli()
 
         // when
