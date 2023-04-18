@@ -1,5 +1,3 @@
-import com.bmuschko.gradle.docker.shaded.com.google.common.cache.CacheBuilder.from
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
